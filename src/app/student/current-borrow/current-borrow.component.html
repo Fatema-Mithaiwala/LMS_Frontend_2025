@@ -1,0 +1,55 @@
+<div class="current-borrow-container">
+    <h3 class="text-center mb-5 title">Currently Borrowed Books</h3>
+    <div *ngIf="borrows.length === 0" class="alert alert-info text-center no-borrows">
+        <i class="bi bi-book me-2"></i> You have no currently borrowed books.
+    </div>
+    <div class="row">
+        <div *ngFor="let borrow of borrows; let i = index" class="col-md-6 col-lg-4 mb-4">
+            <div class="card borrow-card" >
+                <div class="card-header">
+                    <i class="bi bi-book-fill me-2"></i> {{ borrow.bookTitle }}
+                </div>
+                <div class="card-body">
+                    <p class="info">
+                        <i class="bi bi-calendar-check me-1"></i>
+                        Borrowed: {{ borrow.borrowDate | date:'MMM d, yyyy' }}
+                    </p>
+                    <p class="info" [ngClass]="isOverdue(borrow.dueDate) ? 'text-danger' : 'text-success'">
+                        <i class="bi bi-calendar-x me-1"></i>
+                        Due: {{ borrow.dueDate | date:'MMM d, yyyy' }}
+                        {{ isOverdue(borrow.dueDate) ? '(Overdue)' : '' }}
+                    </p>
+                    <p class="info">
+                        <i class="bi bi-currency-rupee me-1"></i>
+                        Penalty: ₹{{ borrow.penaltyAmount }}
+                    </p>
+                    <div class="progress-container">
+                        <span class="progress-label">Time Left:</span>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar"
+                                [style.width]="getTimeLeftPercentage(borrow.dueDate) + '%'"
+                                [ngClass]="{
+                                    'bg-success': getTimeLeftPercentage(borrow.dueDate) > 50,
+                                    'bg-warning': getTimeLeftPercentage(borrow.dueDate) <= 50 && getTimeLeftPercentage(borrow.dueDate) > 20,
+                                    'bg-danger': getTimeLeftPercentage(borrow.dueDate) <= 20 || isOverdue(borrow.dueDate)
+                                }"
+                                [attr.aria-valuenow]="getTimeLeftPercentage(borrow.dueDate)"
+                                aria-valuemin="0" aria-valuemax="100">
+                                {{ getTimeLeftPercentage(borrow.dueDate) | number:'1.0-0' }}%
+                            </div>
+                        </div>
+                    </div>
+                    <p class="info mt-2"><strong>Notes:</strong> {{ borrow.notes || 'No additional notes available.' }}</p>
+                    <p class="info"><strong>Transaction ID:</strong> {{ borrow.transactionId }}</p>
+                    <button class="btn btn-return mt-3 w-100"
+                        [disabled]="hasPendingReturnRequest(borrow.transactionId)"
+                        (click)="initiateReturn(borrow); $event.stopPropagation()"
+                        [attr.title]="hasPendingReturnRequest(borrow.transactionId) ? 'Return request already submitted' : 'Click to return this book'">
+                        <i class="bi bi-arrow-return-left me-2"></i>
+                        {{ hasPendingReturnRequest(borrow.transactionId) ? 'Return Requested' : 'Return Book' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

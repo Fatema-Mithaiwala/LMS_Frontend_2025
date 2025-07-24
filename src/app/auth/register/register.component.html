@@ -1,0 +1,149 @@
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center py-4">
+  <div class="row w-100 shadow-lg rounded bg-white overflow-hidden" style="max-width: 1000px;">
+
+    <div class="col-12 col-md-6 p-5 d-flex flex-column justify-content-center">
+      <div class="mb-4 text-center">
+        <h3 class="fw-bold mb-2">Create Account</h3>
+        <p class="text-muted">Fill in your details to register</p>
+      </div>
+
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" id="firstName" formControlName="firstName" class="form-control"
+            placeholder="Enter first name" />
+          <ng-container *ngIf="userForm.get('firstName')?.touched && userForm.get('firstName')?.errors as errors">
+            <div class="text-danger small">
+              <ng-container *ngIf="errors['required']; else firstMin">
+                First name is required.
+              </ng-container>
+              <ng-template #firstMin>
+                <ng-container *ngIf="errors['minlength']; else firstSpace">
+                  Minimum 2 characters.
+                </ng-container>
+              </ng-template>
+              <ng-template #firstSpace>
+                <ng-container *ngIf="errors['noSpaceAllowed']; else firstAlpha">
+                  No spaces allowed.
+                </ng-container>
+              </ng-template>
+              <ng-template #firstAlpha>
+                <ng-container *ngIf="errors['noNumbersOrSpecialCharsAllowed']">
+                  Only alphabets are allowed.
+                </ng-container>
+              </ng-template>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" id="lastName" formControlName="lastName" class="form-control"
+            placeholder="Enter last name" />
+          <ng-container *ngIf="userForm.get('lastName')?.touched && userForm.get('lastName')?.errors as errors">
+            <div class="text-danger small">
+              <ng-container *ngIf="errors['required']; else lastMin">
+                Last name is required.
+              </ng-container>
+              <ng-template #lastMin>
+                <ng-container *ngIf="errors['minlength']; else lastSpace">
+                  Minimum 2 characters.
+                </ng-container>
+              </ng-template>
+              <ng-template #lastSpace>
+                <ng-container *ngIf="errors['noSpaceAllowed']; else lastAlpha">
+                  No spaces allowed.
+                </ng-container>
+              </ng-template>
+              <ng-template #lastAlpha>
+                <ng-container *ngIf="errors['noNumbersOrSpecialCharsAllowed']">
+                  Only alphabets are allowed.
+                </ng-container>
+              </ng-template>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" id="email" formControlName="email" class="form-control" placeholder="Enter email" />
+          <ng-container *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors as errors">
+            <div class="text-danger small">
+              <ng-container *ngIf="errors['required']; else emailInvalid">
+                Email is required.
+              </ng-container>
+              <ng-template #emailInvalid>
+                <ng-container *ngIf="errors['pattern']">
+                  Enter a valid email address.
+                </ng-container>
+              </ng-template>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Mobile Number</label>
+          <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control"
+            placeholder="Enter mobile number" maxlength="10" />
+          <ng-container *ngIf="userForm.get('phoneNumber')?.touched && userForm.get('phoneNumber')?.errors as errors">
+            <div class="text-danger small">
+              <ng-container *ngIf="errors['required']; else phonePattern">
+                Phone number is required.
+              </ng-container>
+              <ng-template #phonePattern>
+                <ng-container *ngIf="errors['pattern']">
+                  Enter a valid 10-digit mobile number.
+                </ng-container>
+              </ng-template>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" id="password" formControlName="password" class="form-control"
+            placeholder="Enter password" />
+          <ng-container *ngIf="userForm.get('password')?.touched && userForm.get('password')?.errors as errors">
+            <div class="text-danger small">
+              <ng-container *ngIf="errors['required']; else passwordWeak">
+                Password is required.
+              </ng-container>
+              <ng-template #passwordWeak>
+                <ng-container *ngIf="errors['passwordStrength']">
+                  Password must be 6–12 characters, with uppercase, lowercase, a number, and '@'.
+                </ng-container>
+              </ng-template>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control"
+            placeholder="Re-enter password" />
+          <div class="text-danger small"
+            *ngIf="userForm.hasError('passwordMismatch') && userForm.get('confirmPassword')?.touched">
+            Passwords do not match.
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 py-2 mt-3" [disabled]="userForm.invalid">
+          Register
+        </button>
+
+        <div class="text-center mt-3">
+          <small class="text-muted">
+            Already have an account?
+            <a routerLink="/auth/login" class="fw-bold text-success">Login</a>
+          </small>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center">
+      <img src="assets/images/loginPage/piledBooks.png" alt="Books Illustration" class="img-fluid rounded"
+        style="max-height: 900px; object-fit: contain;" />
+    </div>
+  </div>
+</div>

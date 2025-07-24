@@ -1,0 +1,42 @@
+<div class="wishlist-container">
+  <h3 class="text-center mb-4 p-5 ">Your Wishlist</h3>
+
+  <ng-container *ngIf="!isLoading; else loading">
+    <div *ngIf="wishlist.length === 0" class="alert alert-info text-center">
+      Your wishlist is empty. Add some books to get started!
+    </div>
+
+    <div class="row" *ngIf="wishlist.length > 0">
+      <div *ngFor="let item of wishlist" class="col-md-6 col-lg-4 mb-4">
+        <div class="card wishlist-card">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.bookTitle }}</h5>
+            <p class="card-text">
+              Added on: {{ item.createdAt | date: 'mediumDate' }}<br>
+              Status: {{ item.availableCopies! > 0 ? 'Available' : 'Not Available' }}
+            </p>
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-danger btn-sm" (click)="removeFromWishlist(item.wishlistId)">
+                Remove
+              </button>
+              <button class="btn btn-success btn-sm"
+                      [disabled]="item.availableCopies! <= 0"
+                      (click)="borrowBook(item.bookId)">
+                Borrow
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="text-center mt-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p>Loading wishlist...</p>
+    </div>
+  </ng-template>
+</div>

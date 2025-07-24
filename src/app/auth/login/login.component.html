@@ -1,0 +1,78 @@
+<div class="login-wrapper d-flex align-items-center justify-content-center min-vh-100">
+  <div class="login-container px-3 px-md-5">
+    <div class="row shadow-lg rounded form-container overflow-hidden">
+
+      <div class="col-md-7 d-none d-md-block p-0">
+        <img
+          src="assets/images/loginPage/piledBooks.png"
+          alt="Books Illustration"
+          class="img-fluid w-100 h-100 object-fit-cover"
+          style="object-fit: cover;"
+        />
+      </div>
+
+      <div class="col-12 col-md-5 p-4 d-flex flex-column justify-content-center">
+        <h5 class="text-uppercase text-center mb-3">Login</h5>
+        <p class="text-center mb-4 text-muted">Please fill in your details</p>
+
+        <form #loginFormRef="ngForm" (ngSubmit)="onSubmit(loginFormRef)" novalidate>
+          <div class="mb-3">
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Your Email"
+              name="email"
+              required
+              email
+              ngModel
+              #emailModel="ngModel"
+            />
+            <div *ngIf="emailModel.touched && emailModel.invalid" class="text-danger small">
+              <div *ngIf="emailModel.errors?.['required']">Email is required.</div>
+              <div *ngIf="emailModel.errors?.['email']">Enter a valid email address.</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Enter Password"
+              name="password"
+              required
+              minlength="6"
+              ngModel
+              #passwordModel="ngModel"
+            />
+            <div *ngIf="passwordModel.touched && passwordModel.invalid" class="text-danger small">
+              <div *ngIf="passwordModel.errors?.['required']">Password is required.</div>
+              <div *ngIf="passwordModel.errors?.['minlength']">Minimum 6 characters.</div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-dark text-white w-100"
+            [disabled]="loginFormRef.invalid"
+          >
+            Submit →
+          </button>
+        </form>
+
+        <div class="text-center mt-4">
+          <p class="text-muted mb-0">
+            Don’t have an account?
+            <a routerLink="/auth/register" class="fw-bold text-success">Create one</a>
+          </p>
+        </div>
+
+         <div class="text-center mt-1">
+          <p class="text-muted mb-0">
+           Forgot your password?
+            <a routerLink="/auth/forgot-password" class="fw-bold text-success">Reset Password</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

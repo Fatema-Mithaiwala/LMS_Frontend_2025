@@ -1,0 +1,39 @@
+.profile-container {
+  background-color: #f8f9fa;
+  font-family: 'Poppins', sans-serif;
+}
+
+.profile-card {
+  border: 1px solid #e6e6e6;
+  transition: box-shadow 0.3s ease;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  &:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .avatar-bg {
+    background-color: #000000;
+    width: 166px;
+    height: 166px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar-img {
+    width: 156px;
+    height: 156px;
+    object-fit: cover;
+  }
+
+  .btn {
+    border-radius: 30px;
+    background-color: #dc5c66 !important;
+    border: none !important;
+  }
+  .btn:hover{
+    background-color: #da3644 !important;
+  }
+}

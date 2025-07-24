@@ -1,0 +1,52 @@
+<div class="requests-container">
+    <h3 class="text-center mb-4 title ">Your Requests</h3>
+
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'borrow'" (click)="setActiveTab('borrow')">Borrow Requests</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'return'" (click)="setActiveTab('return')">Return Requests</a>
+        </li>
+    </ul>
+
+    <div *ngIf="activeTab === 'borrow'">
+        <div *ngIf="borrowRequests.length === 0" class="alert alert-info text-center no-requests">
+            <i class="bi bi-book me-2"></i> You have no borrow requests.
+        </div>
+        <div class="row">
+            <div *ngFor="let request of borrowRequests" class="col-md-6 col-lg-4 mb-4">
+                <div class="card request-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ request.bookTitle }}</h5>
+                        <p class="card-text">
+                            Requested on: {{ request.requestDate | date:'mediumDate' }}<br>
+                            Status: <span [ngClass]="getStatusClass(request.status)">{{ request.status }}</span><br>
+                            <span *ngIf="request.remarks">Remarks: {{ request.remarks }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="activeTab === 'return'">
+        <div *ngIf="returnRequests.length === 0" class="alert alert-info text-center no-requests">
+            <i class="bi bi-book me-2"></i> You have no return requests.
+        </div>
+        <div class="row">
+            <div *ngFor="let request of returnRequests" class="col-md-6 col-lg-4 mb-4">
+                <div class="card request-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ request.bookTitle }}</h5>
+                        <p class="card-text">
+                            Requested on: {{ request.returnDate | date:'mediumDate' }}<br>
+                            Status: <span [ngClass]="getStatusClass(request.status)">{{ request.status }}</span><br>
+                            Transaction ID: {{ request.transactionId }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

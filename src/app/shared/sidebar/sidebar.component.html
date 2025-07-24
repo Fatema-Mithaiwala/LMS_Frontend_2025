@@ -1,0 +1,155 @@
+<div *ngIf="isInitialized" class="sidebar-container">
+
+  <div class="sidebar d-flex flex-column"
+       [ngClass]="{
+         'collapsed': !isMobile && isCollapsed,
+         'hide-on-mobile': isMobile && isMobileHidden,
+         'mobile-full': isMobile && !isMobileHidden
+       }">
+
+    <div class="flex-grow-1 d-flex flex-column justify-content-between p-3">
+      <!-- Logo -->
+      <div class="mb-4 text-center">
+        <a href="/" class="text-decoration-none text-dark fs-4 fw-bold">
+          <i class="fa-solid fa-book pe-2"></i>
+          <span *ngIf="!isCollapsed">Pixel Page</span>
+        </a>
+      </div>
+
+      <!-- Navigation -->
+      <ul class="nav flex-column text-center gap-2">
+        <!-- Common Links -->
+        <li class="nav-item">
+          <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onNavClick()" class="nav-link">
+            <i class="bi bi-house-door"></i>
+            <span *ngIf="!isCollapsed">Home</span>
+          </a>
+        </li>
+
+        <!-- Admin Tabs -->
+        <ng-container *ngIf="isAdmin">
+          <li class="nav-item">
+            <a routerLink="/admin/dashboard" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-bar-chart"></i>
+              <span *ngIf="!isCollapsed">System Stats</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/admin/students" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-people"></i>
+              <span *ngIf="!isCollapsed">Students</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/admin/books" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-book-half"></i>
+              <span *ngIf="!isCollapsed">Books</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/admin/librarians" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-person-badge"></i>
+              <span *ngIf="!isCollapsed">Librarians</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/admin/request-management" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-ui-checks-grid"></i>
+              <span *ngIf="!isCollapsed">Request Management</span>
+            </a>
+          </li>
+        </ng-container>
+
+        <!-- Librarian Tabs -->
+        <ng-container *ngIf="isLibrarian">
+          <li class="nav-item">
+            <a routerLink="/librarian/dashboard" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-bar-chart"></i>
+              <span *ngIf="!isCollapsed">System Stats</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/librarian/students" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-people"></i>
+              <span *ngIf="!isCollapsed">Students</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/librarian/books" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-book-half"></i>
+              <span *ngIf="!isCollapsed">Books</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/librarian/request-management" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-ui-checks-grid"></i>
+              <span *ngIf="!isCollapsed">Request Management</span>
+            </a>
+          </li>
+        </ng-container>
+
+        <!-- Student Tabs -->
+        <ng-container *ngIf="isStudent">
+          <li class="nav-item">
+            <a routerLink="/student/browse-books" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-book"></i>
+              <span *ngIf="!isCollapsed">Browse Books</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/student/wishlist" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-heart"></i>
+              <span *ngIf="!isCollapsed">Wishlist</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/student/requests" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-ui-checks-grid"></i>
+              <span *ngIf="!isCollapsed">Requests</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/student/current-borrowing" routerLinkActive="active" (click)="onNavClick()" class="nav-link">
+              <i class="bi bi-book-half"></i>
+              <span *ngIf="!isCollapsed">Current Borrowing</span>
+            </a>
+          </li>
+          <li class="nav-item position-relative">
+  <a routerLink="/student/notifications" routerLinkActive="active" class="nav-link d-flex align-items-center justify-content-center position-relative" (click)="onNavClick()">
+    <i class="bi bi-bell"></i>
+    <span *ngIf="!isCollapsed">Notifications</span>
+    <span 
+      *ngIf="(notificationService.unreadCount$ | async) ?? 0 > 0" 
+      class="badge position-absolute top-0 start-100 translate-middle animate__animated animate__pulse animate__infinite">
+      {{ (notificationService.unreadCount$ | async) ?? 0 }}
+    </span>
+  </a>
+</li>
+        </ng-container>
+      </ul>
+
+      <!-- Profile -->
+      <div class="dropdown mt-4 pt-4 border-top text-center">
+        <a class="d-flex align-items-center justify-content-center text-dark dropdown-toggle"
+           href="#" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <img [src]="'https://avatar.iran.liara.run/public'" alt="avatar" width="36" height="36" class="rounded-circle me-2">
+          <span *ngIf="!isCollapsed">{{userName}}</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+          <li *ngIf="isLoggedIn"><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+          <li *ngIf="!isLoggedIn"><a class="dropdown-item" routerLink="/auth/login">Sign In</a></li>
+          <li *ngIf="isLoggedIn"><hr class="dropdown-divider"></li>
+          <li *ngIf="isLoggedIn"><a class="dropdown-item text-danger" (click)="logout()">Sign Out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toggle Button -->
+  <button class="toggle-btn" (click)="toggleSidebar()">
+    <i [ngClass]="isCollapsed || isMobileHidden ? 'fa-solid fa-book' : 'fa-solid fa-book-open'"></i>
+  </button>
+
+  <!-- Mobile overlay -->
+  <div *ngIf="isMobile && !isMobileHidden" class="mobile-overlay" (click)="toggleSidebar()"></div>
+</div>

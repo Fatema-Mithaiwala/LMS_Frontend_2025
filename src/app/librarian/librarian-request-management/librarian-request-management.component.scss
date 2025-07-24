@@ -1,0 +1,130 @@
+.request-management {
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.card {
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.nav-tabs {
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.nav-tabs .nav-link {
+  color: #666;
+  font-weight: 500;
+  border: none;
+  border-radius: 0;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link.active {
+  color: #dc5c66;
+  border-bottom: 3px solid #dc5c66;
+  background: transparent;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #000000;
+}
+
+.table {
+  border-radius: 10px;
+  margin-bottom: 0;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #e7f1ff;
+  color: #333;
+  font-weight: 600;
+}
+
+.table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.table-responsive {
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.btn-group .btn {
+  border-radius: 20px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-group .btn.active {
+  background: #dc5c66;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.btn-group .btn:hover {
+  background: #e7f1ff;
+  color: #0056b3;
+}
+
+.alert {
+  min-width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.text-primary {
+  color: #dc5c66 !important;
+}
+
+.text-secondary {
+  color: #6c757d !important;
+}
+
+@media (max-width: 768px) {
+  .request-management {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .nav-tabs .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-group .btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .table th, .table td {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+}

@@ -1,0 +1,96 @@
+:root {
+  --clr-primary-500: #5c6ac4; 
+  --clr-success-500: #27ae60;  
+  --clr-danger-500:  #e63946;  
+
+  --clr-card-bg:     rgba(255, 255, 255, 0.6);
+  --clr-card-blur:   14px;
+  --clr-card-border: rgba(255, 255, 255, 0.4);
+}
+
+
+.stats-wrapper {
+  font-family: 'Segoe UI', sans-serif;
+  padding: 2rem;
+  min-height: 100vh;
+
+  h2,
+  h5 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+
+  .stat-card,
+  .card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--clr-card-border);
+    border-radius: 1rem;
+    background: var(--clr-card-bg);
+    backdrop-filter: blur(var(--clr-card-blur));
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  .icon {
+    font-size: 1.8rem;
+    border-radius: 50%;
+    padding: 0.65rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .gradient-primary  { background: linear-gradient(45deg, var(--clr-primary-500), #7986ff); }
+  .gradient-success  { background: linear-gradient(45deg, var(--clr-success-500), #6ed8a0); }
+  .gradient-warning  { background: linear-gradient(45deg, var(--clr-warning-500), #ffdd8d); }
+  .gradient-info     { background: linear-gradient(45deg, var(--clr-info-500),   #7dd4ff); }
+  .gradient-danger   { background: linear-gradient(45deg, var(--clr-danger-500), #ff8a8a); }
+
+
+
+  .stat-image {
+    width: 90px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .breakdown .tile {
+    background: var(--clr-card-bg);
+    border: 1px solid var(--clr-card-border);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  canvas {
+    max-height: 320px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .icon {
+      font-size: 1.6rem;
+      padding: 0.55rem;
+    }
+    .stat-image {
+      width: 70px;
+    }
+    canvas {
+      max-height: 260px;
+    }
+  }
+}

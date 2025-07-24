@@ -1,0 +1,24 @@
+<div class="notification-container">
+    <h3 class="text-center mb-4 p-5 title">Notifications</h3>
+    <div *ngIf="notifications.length === 0" class="alert alert-info text-center no-notifications">
+        <i class="bi bi-bell me-2"></i> You have no notifications.
+    </div>
+    <div class="row">
+        <div *ngFor="let notification of notifications" class="col-md-6 col-lg-4 mb-4">
+            <div class="card notification-card" [ngClass]="{'read': notification.isRead}" @fadeIn>
+                <div class="card-body d-flex align-items-center">
+                    <i [ngClass]="getIconClass(notification.type)" class="me-3"></i>
+                    <div class="flex-grow-1">
+                        <p class="message mb-1">{{ notification.message }}</p>
+                        <small class="text-muted">{{ notification.createdAt | date:'MMM d, yyyy, h:mm a' }}</small>
+                    </div>
+                    <button *ngIf="!notification.isRead" class="btn btn-sm btn-mark-read ms-2"
+                        (click)="markAsRead(notification.notificationId)"
+                        title="Mark as read">
+                        <i class="bi bi-check2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,188 @@
+<div class="request-management container-fluid px-4 py-5">
+  <h2 class="fw-bold mb-4 text-center text-primary animate__animated animate__fadeIn">
+    Manage Library Requests
+  </h2>
+
+  <div class="card shadow-lg p-4 mb-5 animate__animated animate__fadeInUp">
+    <ul class="nav nav-tabs mb-4" id="requestTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="borrow-tab" data-bs-toggle="tab" data-bs-target="#borrow"
+                type="button" role="tab" aria-controls="borrow" aria-selected="true">
+          Borrow Requests
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="return-tab" data-bs-toggle="tab" data-bs-target="#return"
+                type="button" role="tab" aria-controls="return" aria-selected="false">
+          Return Requests
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="requestTabContent">
+      <div class="tab-pane fade show active" id="borrow" role="tabpanel" aria-labelledby="borrow-tab">
+        <h5 class="text-center mb-3 text-secondary">Borrow Requests</h5>
+
+        <div class="d-flex justify-content-center mb-4">
+          <div class="btn-group" role="group" aria-label="Borrow Request Filter">
+            <button type="button"
+                    class="btn btn-outline-primary"
+                    [ngClass]="{'active': borrowFilter() === 'Pending'}"
+                    (click)="onBorrowFilterChange('Pending')">
+              Pending
+            </button>
+            <button type="button"
+                    class="btn btn-outline-primary"
+                    [ngClass]="{'active': borrowFilter() === 'Approved'}"
+                    (click)="onBorrowFilterChange('Approved')">
+              Approved
+            </button>
+            <button type="button"
+                    class="btn btn-outline-primary"
+                    [ngClass]="{'active': borrowFilter() === 'Rejected'}"
+                    (click)="onBorrowFilterChange('Rejected')">
+              Rejected
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="isLoadingBorrow()" class="text-center my-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="text-muted mt-2">Loading borrow requests...</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="!isLoadingBorrow()">
+          <table class="table table-striped table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Book</th>
+                <th>Request Date</th>
+                <th>Status</th>
+                <th>Remarks</th>
+                <th *ngIf="borrowFilter() === 'Pending'">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let request of filteredBorrowRequests()">
+                <td>{{ request.borrowRequestId }}</td>
+                <td>{{ request.userName }} (ID: {{ request.userId }})</td>
+                <td>{{ request.bookTitle }} (ID: {{ request.bookId }})</td>
+                <td>{{ request.requestDate | date:'medium' }}</td>
+                <td>
+                  <span class="badge"
+                        [ngClass]="{
+                          'bg-warning': request.status === 'Pending',
+                          'bg-success': request.status === 'Approved',
+                          'bg-danger': request.status === 'Rejected'
+                        }">
+                    {{ request.status }}
+                  </span>
+                </td>
+                <td>{{ request.remarks || '-' }}</td>
+                <td *ngIf="borrowFilter() === 'Pending'">
+                  <button class="btn btn-success btn-sm me-2" (click)="approveBorrowRequest(request.borrowRequestId)">
+                    Accept
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="rejectBorrowRequest(request.borrowRequestId)">
+                    Reject
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="filteredBorrowRequests().length === 0">
+                <td [attr.colspan]="borrowFilter() === 'Pending' ? 7 : 6" class="text-center">
+                  No {{ borrowFilter().toLowerCase() }} borrow requests
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="return" role="tabpanel" aria-labelledby="return-tab">
+        <h5 class="text-center mb-3 text-secondary">Return Requests</h5>
+
+        <div class="d-flex justify-content-center mb-4">
+          <div class="btn-group" role="group" aria-label="Return Request Filter">
+            <button type="button"
+                    class="btn btn-outline-primary"
+                    [ngClass]="{'active': returnFilter() === 'Pending'}"
+                    (click)="onReturnFilterChange('Pending')">
+              Pending
+            </button>
+            <button type="button"
+                    class="btn btn-outline-primary"
+                    [ngClass]="{'active': returnFilter() === 'Approved'}"
+                    (click)="onReturnFilterChange('Approved')">
+              Approved
+            </button>
+            <button type="button"
+                    class="btn btn-outline-primary"
+                    [ngClass]="{'active': returnFilter() === 'Rejected'}"
+                    (click)="onReturnFilterChange('Rejected')">
+              Rejected
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="isLoadingReturn()" class="text-center my-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="text-muted mt-2">Loading return requests...</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="!isLoadingReturn()">
+          <table class="table table-striped table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th>ID</th>
+                <th>Transaction ID</th>
+                <th>User</th>
+                <th>Book</th>
+                <th>Return Date</th>
+                <th>Status</th>
+                <th *ngIf="returnFilter() === 'Pending'">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let request of filteredReturnRequests()">
+                <td>{{ request.returnRequestId }}</td>
+                <td>{{ request.transactionId }}</td>
+                <td>{{ request.userName }} (ID: {{ request.userId }})</td>
+                <td>{{ request.bookTitle }} (ID: {{ request.bookId }})</td>
+                <td>{{ request.returnDate | date:'medium' }}</td>
+                <td>
+                  <span class="badge"
+                        [ngClass]="{
+                          'bg-warning': request.status === 'Pending',
+                          'bg-success': request.status === 'Approved',
+                          'bg-danger': request.status === 'Rejected'
+                        }">
+                    {{ request.status }}
+                  </span>
+                </td>
+                <td *ngIf="returnFilter() === 'Pending'">
+                  <button class="btn btn-success btn-sm me-2" (click)="approveReturnRequest(request.returnRequestId)">
+                    Accept
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="rejectReturnRequest(request.returnRequestId)">
+                    Reject
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="filteredReturnRequests().length === 0">
+                <td [attr.colspan]="returnFilter() === 'Pending' ? 7 : 6" class="text-center">
+                  No {{ returnFilter().toLowerCase() }} return requests
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

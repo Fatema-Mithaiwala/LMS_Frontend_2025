@@ -1,0 +1,135 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #FDFBF6;
+}
+
+.p-toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  width: calc(100% - 2rem);
+  max-width: 420px;
+  animation: fadeInSlide 0.4s ease-in-out;
+}
+
+h1, h2, h3, h4, h5, h6 ,div,span, p{
+   font-family: 'Proza Libre', sans-serif;
+  // font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+  // color: #222;
+}
+
+/* Toast Message Layout */
+.p-toast .p-toast-message {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  border-left: 6px solid;
+  border-radius: 10px;
+//   background: linear-gradient(to right, #ffffff, #f8f8f8);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Icon and Content */
+.p-toast .p-toast-icon {
+  font-size: 1.2rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.p-toast .p-toast-message-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.p-toast .p-toast-summary {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.p-toast .p-toast-detail {
+  font-size: 0.875rem;
+  color: #444;
+}
+
+/* Close Button */
+.p-toast .p-toast-icon-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #444;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  margin-top: 0.15rem;
+  transition: color 0.2s ease;
+}
+
+.p-toast .p-toast-icon-close:hover {
+  color: #000;
+}
+
+/* Variants */
+.p-toast-message-success {
+  border-color: #28a745;
+  color: #155724;
+}
+
+.p-toast-message-success .p-toast-icon {
+  color: #28a745;
+}
+
+.p-toast-message-error,
+.p-toast-message-danger {
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+.p-toast-message-error .p-toast-icon,
+.p-toast-message-danger .p-toast-icon {
+  color: #dc3545;
+}
+
+.p-toast-message-info {
+  border-color: #17a2b8;
+  color: #0c5460;
+}
+
+.p-toast-message-info .p-toast-icon {
+  color: #17a2b8;
+}
+
+.p-toast-message-warn {
+  border-color: #ffc107;
+  color: #856404;
+}
+
+.p-toast-message-warn .p-toast-icon {
+  color: #ffc107;
+}
+
+/* Fade in animation */
+@keyframes fadeInSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+i{
+  background-color: transparent;
+}

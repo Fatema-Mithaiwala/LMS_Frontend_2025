@@ -1,0 +1,32 @@
+<div class="profile-container d-flex justify-content-center align-items-center min-vh-100 p-3">
+  <div class="profile-card rounded-4 p-4 w-100" style="max-width: 420px;">
+    <div class="text-center mb-3">
+      <div class="avatar-bg mx-auto mb-3">
+        <img [src]="'https://avatar.iran.liara.run/public'" alt="Profile" class="avatar-img rounded-circle" />
+      </div>
+      <h5 class="fw-semibold mb-1">{{ profile?.fullName || 'N/A' }}</h5>
+      <div class="text-muted small mb-2">{{ profile?.email || 'N/A' }}</div>
+      <div class="text-muted small">{{ profile?.phoneNumber || 'N/A' }}</div>
+    </div>
+
+    <div class="text-center">
+      <button class="btn btn-dark px-4" (click)="onEdit()">
+        <i class="bi bi-pencil me-2"></i>Edit Profile
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" [ngClass]="{'d-block': showEditModal}" [style.display]="showEditModal ? 'block' : 'none'" style="background-color: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Profile</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <app-user-form [user]="profile" [role]="profile?.role || 'User'" (formSubmit)="onFormSubmit($event)"></app-user-form>
+      </div>
+    </div>
+  </div>
+</div>

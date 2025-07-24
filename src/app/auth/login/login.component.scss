@@ -1,0 +1,41 @@
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fcfbf8;
+  padding-left: 0;
+
+
+}
+
+.sidebar.collapsed ~ .login-wrapper {
+  @media (min-width: 992px) {
+    margin-left: 80px; 
+  }
+}
+
+.login-container {
+  width: 100%;
+  max-width: 1140px;
+  margin: auto;
+}
+
+.form-container {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-height: 500px;
+
+  @media (max-width: 767.98px) {
+    box-shadow: none;
+    border: none;
+  }
+}
+
+img.object-fit-cover {
+  object-fit: cover;
+}

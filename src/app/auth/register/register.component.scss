@@ -1,0 +1,15 @@
+form {
+
+  input,
+  select {
+    &:focus {
+      border-color: #198754; 
+      box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+    }
+  }
+
+  button {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+}

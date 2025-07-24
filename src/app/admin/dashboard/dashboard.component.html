@@ -1,0 +1,99 @@
+<div class="stats-wrapper container-fluid px-4 py-5">
+  <h2 class="fw-bold mb-4 text-center animate__animated animate__fadeIn">Welcome Back, Admin</h2>
+
+
+  <div class="row g-4 mb-5 justify-content-center">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let stat of sysStats(); let i = index">
+      <div class="card stat-card border-0 shadow-lg h-100 animate__animated animate__zoomIn"
+        [style.animation-delay]="(i * 0.1) + 's'">
+        <div class="card-body d-flex align-items-center gap-3" [ngClass]="stat.gradient">
+          <i class="{{ stat.icon }} icon fs-2" [ngClass]="stat.color"></i>
+          <div class="text-black">
+            <div class="fs-6 opacity-75">{{ stat.label }}</div>
+            <div class="fs-4 fw-bold">{{ stat.value }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h5 class="fw-semibold mb-3 text-center animate__animated animate__fadeIn">Library Statistics</h5>
+  <div class="row g-4 mb-5 justify-content-center">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let stat of bookStats(); let i = index">
+      <div class="card stat-card border-0 shadow-lg h-100 animate__animated animate__zoomIn"
+        [style.animation-delay]="(i * 0.1) + 's'">
+        <div class="card-body d-flex align-items-center gap-3" [ngClass]="stat.gradient">
+          <i class="{{ stat.icon }} icon fs-2" [ngClass]="stat.color"></i>
+          <div class="text-black">
+            <div class="fs-6 opacity-75">{{ stat.label }}</div>
+            <div class="fs-4 fw-bold">{{ stat.value }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h5 class="fw-semibold mb-3 text-center animate__animated animate__fadeIn">Detailed User Breakdown</h5>
+  <div class="row g-3 mb-5 justify-content-center">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let item of breakdown()">
+      <div
+        class="p-3 rounded border shadow-sm d-flex justify-content-between align-items-center animate__animated animate__slideInUp">
+        <span class="text-muted">{{ item.label }}</span>
+        <span class="fw-bold text-primary">{{ item.count }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mb-5 justify-content-center">
+    <div class="col-12 col-md-6">
+      <div class="card shadow-lg p-4 animate__animated animate__fadeInUp">
+        <h5 class="text-center mb-3">Book Status Distribution</h5>
+        <canvas id="bookStatusChart"></canvas>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <div class="card shadow-lg p-4 animate__animated animate__fadeInUp">
+        <h5 class="text-center mb-3">User Role Distribution</h5>
+        <canvas id="userRoleChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow-lg p-4 animate__animated animate__fadeInUp">
+        <h5 class="text-center mb-3">Borrow Transactions</h5>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Book ID</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let transaction of borrowTransactions()">
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.userId }}</td>
+                <td>{{ transaction.bookId }}</td>
+                <td>{{ transaction.borrowDate | date:'medium' }}</td>
+                <td>{{ transaction.dueDate | date:'medium' }}</td>
+                <td>{{ transaction.returnDate ? (transaction.returnDate | date:'medium') : 'Not Returned' }}</td>
+                <td>{{ transaction.returnDate ? 'Fulfilled' : 'Active' }}</td>
+              </tr>
+              <tr *ngIf="borrowTransactions().length === 0">
+                <td colspan="7" class="text-center">No transactions available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+// Expanded Sidebar
+
+
+// Collapsed Sidebar
+// .ms-80 {
+//   margin-left: 80px !important;
+// }
+
+.ms-lg-240 {
+  @media (min-width: 992px) {
+    margin-left: 50px !important;
+  }
+}

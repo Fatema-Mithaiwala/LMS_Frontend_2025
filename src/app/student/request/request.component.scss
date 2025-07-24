@@ -1,0 +1,108 @@
+.requests-container {
+    padding: 20px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.nav-tabs .nav-link {
+    color: #666;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #ff1744;
+    border-bottom: 2px solid #ff1744;
+}
+
+.nav-tabs .nav-link.active {
+    color: #ff1744;
+    border-bottom: 2px solid #ff1744;
+}
+
+.no-requests {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 20px;
+    font-size: 1.2rem;
+    color: #666;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.request-card {
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #ff1744, rgb(185, 170, 239));
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.request-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 0.9rem;
+}
+
+.status-pending {
+    background-color: #ffeb3b;
+    color: black;
+    font-weight: bold;
+    padding-inline: 0.5em;
+}
+
+.status-approved {
+    color: #00e676;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: #ff1744;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+    .nav-tabs .nav-link {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    .card-title {
+        font-size: 1.1rem;
+    }
+    .card-text {
+        font-size: 0.85rem;
+    }
+}

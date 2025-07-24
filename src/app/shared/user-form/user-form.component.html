@@ -1,0 +1,140 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+  <div class="mb-3">
+    <label class="form-label">First Name</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="firstName"
+      [class.is-invalid]="userForm.get('firstName')?.touched && userForm.get('firstName')?.invalid"
+      placeholder="John"
+    />
+    <ng-container *ngIf="userForm.get('firstName')?.touched && userForm.get('firstName')?.invalid">
+      <ng-template [ngIf]="userForm.get('firstName')?.errors?.['required']">
+        <small class="text-danger">First name is required. </small>
+      </ng-template>
+      <ng-template [ngIf]="userForm.get('firstName')?.errors?.['minlength']">
+        <small class="text-danger">Minimum 2 characters required.</small>
+      </ng-template>
+      <ng-template [ngIf]="userForm.get('firstName')?.errors?.['noNumbersOrSpecialCharsAllowed']">
+        <small class="text-danger">No numbers or special characters allowed.</small>
+      </ng-template>
+      <ng-template [ngIf]="userForm.get('firstName')?.errors?.['noSpaceAllowed']">
+        <small class="text-danger">Cannot contain only spaces.</small>
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Last Name</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="lastName"
+      [class.is-invalid]="userForm.get('lastName')?.touched && userForm.get('lastName')?.invalid"
+      placeholder="Doe"
+    />
+    <ng-container *ngIf="userForm.get('lastName')?.touched && userForm.get('lastName')?.invalid">
+      <ng-template [ngIf]="userForm.get('lastName')?.errors?.['required']">
+        <small class="text-danger">Last name is required. </small>
+      </ng-template>
+      <ng-template [ngIf]="userForm.get('lastName')?.errors?.['minlength']">
+        <small class="text-danger">Minimum 2 characters required.</small>
+      </ng-template>
+      <ng-template [ngIf]="userForm.get('lastName')?.errors?.['noNumbersOrSpecialCharsAllowed']">
+        <small class="text-danger">No numbers or special characters allowed.</small>
+      </ng-template>
+      <ng-template [ngIf]="userForm.get('lastName')?.errors?.['noSpaceAllowed']">
+        <small class="text-danger">Cannot contain only spaces.</small>
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Email</label>
+    <input
+      type="email"
+      class="form-control"
+      formControlName="email"
+      [class.is-invalid]="userForm.get('email')?.touched && userForm.get('email')?.invalid"
+      placeholder="email@example.com"
+    />
+    <ng-container *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid">
+      <ng-template [ngIf]="userForm.get('email')?.errors?.['required']">
+        <small class="text-danger">Email is required.</small>
+      </ng-template>
+      <ng-template [ngIf]="userForm.get('email')?.errors?.['pattern']">
+        <small class="text-danger">Invalid email format.</small>
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Phone Number</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="phoneNumber"
+      [class.is-invalid]="userForm.get('phoneNumber')?.touched && userForm.get('phoneNumber')?.invalid"
+      placeholder="9876543210"
+      maxlength="10"
+    />
+    <ng-container *ngIf="userForm.get('phoneNumber')?.touched && userForm.get('phoneNumber')?.invalid">
+      <ng-template [ngIf]="userForm.get('phoneNumber')?.errors?.['required']">
+        <small class="text-danger">Phone number is required.</small>
+      </ng-template>
+      <ng-template [ngIf]="userForm.get('phoneNumber')?.errors?.['pattern']">
+        <small class="text-danger">Enter a valid Indian number.</small>
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="!isEditMode">
+
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        formControlName="password"
+        [class.is-invalid]="userForm.get('password')?.touched && userForm.get('password')?.invalid"
+        placeholder="Password"
+      />
+      <ng-container *ngIf="userForm.get('password')?.touched && userForm.get('password')?.invalid">
+        <ng-template [ngIf]="userForm.get('password')?.errors?.['required']">
+          <small class="text-danger">Password is required.</small>
+        </ng-template>
+        <ng-template [ngIf]="userForm.get('password')?.errors?.['passwordStrength']">
+          <small class="text-danger">Password must contain 1 uppercase, lowercase, digit, '@', and be 6–12 chars long.</small>
+        </ng-template>
+      </ng-container>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Confirm Password</label>
+      <input
+        type="password"
+        class="form-control"
+        formControlName="confirmPassword"
+        [class.is-invalid]="userForm.get('confirmPassword')?.touched && (userForm.get('confirmPassword')?.invalid || userForm.errors?.['passwordMismatch'])"
+        placeholder="Confirm Password"
+      />
+      <ng-container *ngIf="userForm.get('confirmPassword')?.touched">
+        <ng-template [ngIf]="userForm.get('confirmPassword')?.errors?.['required']">
+          <small class="text-danger">Confirm password is required.</small>
+        </ng-template>
+        <ng-template [ngIf]="userForm.errors?.['passwordMismatch']">
+          <small class="text-danger">Passwords do not match.</small>
+        </ng-template>
+      </ng-container>
+    </div>
+
+  </ng-container>
+
+  <div class="text-center mt-4">
+    <button type="submit" class="btn btn-success w-100">
+      {{ isEditMode ? 'Update' : 'Create' }} {{ role }}
+    </button>
+  </div>
+
+</form>

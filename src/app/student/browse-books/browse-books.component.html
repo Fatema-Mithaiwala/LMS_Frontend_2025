@@ -1,0 +1,95 @@
+<div class="browse-books-container container-fluid py-5">
+  <div class="row align-items-center mb-5">
+    <div class="col-md-6 text-center text-md-start">
+      <h2 class="title animate__animated animate__fadeInDown">Explore the Library</h2>
+      <p class="subtitle animate__animated animate__fadeInDown animate__delay-1s">
+        Discover your next favorite book!
+      </p>
+    </div>
+    <div class="col-md-6">
+      <div class="d-flex flex-column flex-md-row gap-3 justify-content-center justify-content-md-end align-items-center">
+        <div class="search-wrapper animate__animated animate__fadeInRight">
+          <i class="bi bi-search search-icon"></i>
+          <input
+            type="text"
+            [(ngModel)]="search"
+            (ngModelChange)="onSearchChange()"
+            placeholder="Search by title, author, or genre..."
+            class="form-control search-input"
+          />
+        </div>
+        <div class="genre-filter animate__animated animate__fadeInRight animate__delay-1s">
+          <select class="form-select" [(ngModel)]="selectedGenre" (change)="filterBooks()">
+            <option value="">All Genres</option>
+            <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center" *ngIf="isLoading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && filteredBooks.length === 0" class="text-center no-books-message animate__animated animate__fadeIn">
+    <p class="text-muted fs-4">No books found. Try a different search or genre!</p>
+    <i class="bi bi-book sad-book-icon"></i>
+  </div>
+
+  <div class="bookshelf-wrapper" *ngIf="!isLoading && filteredBooks.length > 0">
+    <div class="bookshelf">
+      <div class="book-shelf-row">
+        <div class="book-card-wrapper" *ngFor="let book of filteredBooks; let i = index">
+          <div class="book-card animate__animated animate__fadeInUp" [style.animation-delay]="(i * 0.1) + 's'">
+            <div class="book-card-inner">
+              <div class="book-card-front">
+                <img
+                  [src]="book.coverImageBase64 || 'assets/images/student/books/default-cover.jpeg'"
+                  alt="{{ book.title || 'Untitled' }} Cover"
+                  class="book-cover"
+                />
+              </div>
+              <div class="book-card-back">
+                <h6 class="book-title">{{ book.title || 'Untitled' }}</h6>
+                <p class="book-genre"><strong>Genre:</strong> {{ book.genreName || 'Unknown Genre' }}</p>
+                <p class="book-author"><strong>Author:</strong> {{ book.author || 'Unknown Author' }}</p>
+                <p class="book-description">
+                  {{ (book.description || 'No description available.') | slice:0:150 }}{{ (book.description.length > 150) ? '...' : '' }}
+                </p>
+                <p class="book-availability">
+                  <strong>Available Copies:</strong>
+                  <span [ngClass]="book.availableCopies > 0 ? 'text-success' : 'text-danger'">
+                    {{ book.availableCopies }}
+                  </span>
+                </p>
+                <div class="button-group">
+                  <button
+                    *ngIf="book.availableCopies > 0"
+                    class="btn btn-borrow btn-sm glow-on-hover"
+                    (click)="borrowBook(book.bookId)"
+                    [disabled]="isProcessing[book.bookId]"
+                  >
+                    <i class="bi bi-book-half me-1"></i>
+                    {{ isProcessing[book.bookId] ? 'Processing...' : 'Borrow' }}
+                  </button>
+                  <button
+                    *ngIf="book.availableCopies === 0"
+                    class="btn btn-notify btn-sm glow-on-hover"
+                    (click)="notifyMe(book.bookId)"
+                    [disabled]="isProcessing[book.bookId]"
+                  >
+                    <i class="bi bi-bell-fill me-1"></i>
+                    {{ isProcessing[book.bookId] ? 'Processing...' : 'Notify Me' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
